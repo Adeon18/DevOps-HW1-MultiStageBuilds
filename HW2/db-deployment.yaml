@@ -27,7 +27,10 @@ spec:
             - --default-authentication-plugin=mysql_native_password
           env:
             - name: MYSQL_DATABASE
-              value: wordpress
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: MYSQL_DATABASE
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -39,7 +42,10 @@ spec:
                   name: db-secrets
                   key: MYSQL_ROOT_PASSWORD
             - name: MYSQL_USER
-              value: wordpress
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: MYSQL_USER
           image: mariadb:10.6.4-focal
           name: db
           ports:
